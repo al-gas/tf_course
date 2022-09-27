@@ -1,0 +1,67 @@
+Hey, folks! In this lesson, we'll be taking a look at Terraform modules,
+what they are, and how they're used. Simply put,
+a module in Terraform is just another folder or collection of Terraform code
+files.
+And you reference the outputs of that code into other parts of your Terraform
+project.
+It basically groups together multiple resources that are used together in your
+project.
+The main purpose of the modules is to make code reusable elsewhere so that you
+don't have to keep reinventing the wheel.
+The directory which holds your main Terraform code is called the root module,
+always. Now, if you've never worked with modules before,
+then you have definitely always worked inside the root module.
+But once you invoke other modules inside your code,
+these newly referenced modules are known as child modules,
+and one can pass inputs to and get outputs back from these child modules.
+There's a few ways to download and use modules in your Terraform code.
+You can refer to them from the Terraform Public Registry,
+which contains a collection of all publicly available modules.
+On referencing modules from the Terraform Public Registry,
+Terraform downloads them and places them in a directory on your system.
+Usually, that directory is a hidden directory.
+You can also host your modules in a Private Registry,
+which is hosted by yourself or an organization,
+and reference them the same way as you do with the Public Registry.
+You would probably want to use this for closed source code
+or security reasons.
+You can also have the module code saved in a local folder on your system and
+reference that folder using its path.
+Let's see how you would reference a module.
+In this code, module is a reserved keyword,
+and then you have the name of the module itself.
+This module block mainly defines the source where your module code resides.
+It also defines the version of the module and a number of inputs,
+which could be arbitrary.
+As a best practice when using third-party modules or modules within your
+organization,
+you should always require a specific version to ensure that the updates to the
+module don't cause unwanted effects to your deployments.
+Other parameters allowed inside the module block include count,
+which allows spawning multiple separate instances of the module's resources;
+the for_each parameter, which allows iterating over complex variables;
+the providers parameter,
+which allows you to tie down specific providers to your module;
+and the depends_on parameter,
+which allows you to set dependencies for your module.
+Modules can take an arbitrary number of inputs and written outputs back into
+your main code.
+Once you have invoked a module using the module block in your code (that you've
+seen in the earlier slide),
+you can then use the outputs that it returns and plug them back into your code.
+Now, these outputs that were mentioned here are the same ones defined using the
+output block in Terraform.
+Let's take a look at how to consume outputs provided by a child module.
+So you've got your resource, which in this case is an AWS EC2 instance.
+And -- assuming that we referenced the module from our previous slide,
+which is known as my-vpc-module, which returns an output named subnet_id,
+which is the subnet ID where we want to spin up our EC2 instance on the AWS
+network -- you would reference it using the following syntax. That is:
+module dot the name of your module (which in this case is my-vpc-module) and
+then the name of the output of the module (which in this case is subnet_id).
+In this example,
+it would save us having to write separate code for creating a VPC and then
+subnets in that VPC where we need to spin up our instance.
+So this goes to show us the flexibility of Terraform by allowing the usage of
+modules so that we can reuse code elsewhere in our project.
+Thank you for going through this lesson.

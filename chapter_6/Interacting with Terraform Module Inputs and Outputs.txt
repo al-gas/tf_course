@@ -1,0 +1,49 @@
+Hello, Cloud Gurus!
+And welcome to this lesson on interacting with Terraform module inputs and
+outputs.
+This is the primary way that you'll be interacting with the Terraform modules:
+by providing it inputs and getting results as outputs. Now,
+let's dive a little deeper into how you'll be actually doing that. Terraform
+module inputs are arbitrarily named parameters that you pass inside the module
+block. These inputs can be used as variables inside the module code.
+So for example, take this snippet of code:
+this is how you'll be declaring the module inside your main code.
+So using the standard module block that we discussed in an earlier lesson,
+you're passing the source or the path to where the module code resides. Now,
+just remember that this module code is just like any other Terraform code that
+you might have come across, but it is just being reused using this module block.
+And then you're passing in the server-name input variable.
+This is the arbitrary variable that we just mentioned. In this case,
+we're passing it the value us-east-1.
+And once this server-name input variable is consumed by the module,
+inside the module -- that is within the code of the module itself --
+you'll be referencing this variable using the standard variable reference
+notation interval; that is, var.server-name.
+And that is how your module code can consume the variable that you're passing to
+it. The outputs
+declared inside the Terraform module code can be fed back into the root module
+or your main code. For example,
+the output invocation convention when using an output returned by a module back
+inside your main code is the keyword module dot the name of the module (which
+in our case could be my-vpc-module)
+dot the name of the output.
+Now this output is declared using the output block in Terraform.
+And we'll see that in a second. So take, for example,
+this output block. And let's, for the sake of argument,
+say that this is the output block that is used to name the value of the AWS
+instance's private IP inside your Terraform module code.
+Now to use this output variable,
+which has been actually declared inside your Terraform module code,
+the convention to use it back inside your main code is
+module.my-vpc-module.ip_address.
+And this will give you back the IP address of the AWS instance,
+which was actually calculated and created inside your module,
+but is being fed back into your main Terraform code.
+So this is the beauty of Terraform modules.
+You can think of them as functions of a programming language. For example,
+you can pass them an optional number of inputs and, as a result,
+get back outputs,
+which you then feed back into your main code and use as you wish.
+So this was a quick primer on how to feed inputs into your module and then use
+the outputs returned by the module back inside your Terraform main code.
+Thank you for going through this lesson.

@@ -1,0 +1,70 @@
+Hello, Cloud Gurus.
+Welcome to this lesson on Local and Remote State File Storage with Terraform.
+In this lesson,
+we will have an overview of what both these mean in terms of storing and
+accessing Terraform state files. At the end of this section,
+we have a lesson demonstrating how to utilize state storage,
+Terraform outputs, and variables to your benefits. So,
+hang on to your seats and be sure to go through that lesson.
+So we already know that the state file is essential to Terraform. Therefore,
+we need to pay attention to its integrity, safety, and availability.
+Now Terraform generally saves state files locally.
+That is the same system from where you are issuing the Terraform commands,
+and this is a default behavior within Terraform.
+This method of storing state is mostly used for individual projects or testing
+where you are not collaborating with a team. However,
+depending on the criticality of the state file,
+one can still store it in a version control system. As a fail-safe,
+Terraform does back up your last known Terraform state file recorded after a
+successful terraform apply locally.
+As opposed to local state storage,
+which doesn't offer flexibility in collaboration and availability,
+we have the remote state storage mechanism.
+There's a number of preset platforms on which you can set Terraform to store
+state remotely, including AWS S3 storage and Google Cloud storage.
+The full list of backends for more storage is available on Terraform's official
+website, and the list is bound to increase with time.
+The main advantages of storing state files remotely are being able to vet and
+read the files across distributed teams and better security and availability in
+the cloud, which ensures solid backups. So,
+imagine that a team in the US was working on a deployment and making changes to
+it.
+They would configure Terraform to save the state file in a remote state storage
+-- for example, AWS S3. Now,
+if another team in Europe wanted to take a look at the state file for review or
+even work on a shared Terraform code base,
+they would be able to do so from the remotely saved state file.
+Because different cloud storage vendors offer security policies for access to
+files, one can get granular in who can read from and write to the files.
+For example, in AWS S3,
+you can use bucket policies to allow or restrict access to state files. So,
+this is how remote state enables collaboration between distributed teams
+securely. Another useful feature,
+common to both local and remote state storage, is state locking.
+This locks a state file,
+so another operator who has access to your system or code repository does not
+end up executing a parallel run of Terraform deployment by mistake.
+For local state storage,
+state logging is enabled by default when you issue a terraform apply.
+However, state locking is not supported by all remote state storage backends.
+Some of the remote backends which do support state locking are AWS S3,
+Google Cloud storage, and Hashicorp's console.
+State files also contain the output values in your Terraform code,
+which means that those output values can be used by other Terraform projects or
+code. If the state file is stored remotely,
+this can be extremely useful for distributed teams working on data by plans,
+which require successful execution and are ports from a previous Terraform
+deployment. For example,
+say that you have a Terraform code which deploys a database.
+You execute it and deploy infrastructure to the cloud and configure Terraform to
+save state remotely. Now,
+another team which perhaps deploys application can reference your state file
+stored remotely and access the output values,
+which for example could be the IP address and the details of the databases
+deployed. So,
+output sharing by a distributed team is a cool feature which can enable
+modularized infrastructure scored workflows. So,
+this in a nutshell was the magic of local and remote state storage within
+Terraform. Again, we have a very nice demo at the end of the section,
+which will take you through using the remote and local state storage as well as
+variables and outputs in Terraform. Thank you for going through this lesson.

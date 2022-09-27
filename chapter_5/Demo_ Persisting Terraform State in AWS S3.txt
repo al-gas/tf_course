@@ -1,0 +1,217 @@
+Hello, Cloud Gurus.
+Welcome to this Demo on Persisting Terraform State in AWS S3.
+Let's get started.
+We'll be starting off by logging into the CLI and taking a look at the code
+which will be deployed.
+The code will basically use the Docker Terraform provider to deploy an Nginx
+website container locally.
+The main thing to note in the code will be how we set up the backend which
+stores our state file remotely. For this,
+there's a special Terraform block, which --
+among other configuration options for Terraform --
+also allows for defining details of the remote storage backend.
+In this snippet of Terraform block, you can see that the backend is AWS S3,
+and we are providing the region for the storage bucket,
+the key or the name we want to assign to our stored state file,
+and the AWS S3 bucket name.
+Once we are happy with our code and execute it via Terraform apply,
+it will deploy the Docker container and then go out and store the state file as
+defined in the backend. So, this is a summary of what we'll be doing now.
+I'm going to head towards my CLI and demonstrate all of this.
+So I'm logged into my Mac OS CLI, and in this environment,
+I've already got Docker and the AWS CLI installed.
+I've already cloned down the code that I will be working on,
+and the code is split into three files at the moment.
+The reason for splitting it down into three files is for better visibility and
+understanding. But in essence,
+you could have had all of this code in a single file as well.
+Let's start off by looking at the backend dot tf file.
+So this file has the Terraform block that we mentioned earlier,
+and this block helps setting different configuration options for Terraform here.
+We're using a required providers block within the Terraform block,
+and this block helps us fetch the Docker provider that we'll be using to deploy
+the container in question.
+We're also making sure that the deployment only works if the Terraform version
+being used is greater than or equal to version 0 dot 13,
+because some of the features we'll be showcasing will require version 0 dot 13.
+And finally, we arrive at the backend for setting the AWS S3 remote storage.
+The very first option in this block is setting the profile for our AWS CLI
+authentication, which is set to be demo. We'll be creating this in a bit.
+We're also letting it know what region to find the bucket in,
+which is set to us-east-1.
+We're setting a key or name for the Terraform state file,
+which will be stored in AWS S3, and finally,
+we are providing it a name for the bucket. Now,
+this bucket name needs to preexist.
+If we were to go ahead and try to initialize the code directory right now,
+it would fail because right now the bucket does not exist.
+So let's go ahead and set up our AWS CLI for authentication and then
+create the bucket. So we'll clear the screen,
+and we'll use the command AWS hyphen hyphen profile.
+We'll be giving this the name demo,
+as we have set in the backend for setting S3,
+and then we'll type down configure.
+We'll be passing the temporary AWS credentials that have gone from an AWS
+sandbox to this. So the first one is access key ID.
+We'll then provide the secret access key ID.
+We'll pass in the region us-east-1, which is already the default set for it.
+Finally, we can leave the default output format to JSON. So now we are set.
+The only thing you'll need to make sure is that your AWS credentials allow you
+to create S3 buckets in your AWS account. In my case,
+I'm allowed to create buckets.
+So I clear the screen and initiate the AWS CLI call --
+AWS hyphen hyphen profile.
+I'll pass in the name of the profile that we gave inside the backend dot tf file
+-- S3 API create bucket.
+And then we'll use the hyphen hyphen bucket flag to pass in the actual bucket
+name.
+"My awesome S3 bucket 3344" is our
+bucket name. And hopefully, if this bucket name is not already taken up,
+because bucket names are unique across AWS S3,
+we should be able to go through with this command. So I'll hit enter.
+And it turns out that this bucket name is in fact used by someone else.
+So we'll actually go back and change the name of the bucket in our backend dot
+tf file and try creating the bucket name again.
+So we'll go to the backend dot tf file and add another extra 4 at the end of the
+bucket name to make it more random.
+We'll save and quit and execute the bucket creation command one more
+time. And this time it has successfully gone through,
+and we have our S3 bucket. Now let's clear the screen
+and take a look at the rest of the code. So we've got the main dot tf file.
+Let's see what's in this file. In this main dot tf file,
+we are declaring the Docker provider.
+We're not passing it any arguments because -- because, by default,
+it is able to pick up the Docker daemon installed on my system.
+We are next defining the Docker image using the Docker underscore image resource
+type within this provider. And we are passing the image name,
+which will pull down the image of a name, Nginx,
+and then we're using the Nginx image resource and referencing it inside the
+Docker container resource. We're passing in the name Nginx --
+the name of the container, that is --
+and then we're passing in a couple of ports so that we can access it externally
+as well. We first pass in the internal port,
+which defines what port the service internally will be running inside the
+container on. And then we pass in the external port,
+which is how we will be accessing this container once it is up.
+And we actually set in this parameter to our Terraform variable called external
+underscore port. We'll look at that in a second.
+And finally we're passing in the incoming protocol STCP. Now,
+let's quickly take a detour and take a look at the variables dot tf file,
+which contains our external underscore port variable. So I'll clear the screen
+and get out the file variables dot tf.
+This file is declaring a variable of the type number,
+and the default value for this variable is 8080. However,
+it is also using a validation block. Now,
+this validation block is using a condition,
+which makes sure that a certain number is passed to this variable.
+We're using the built-in function in Terraform called regex and passing it two
+inputs. The first one is the ports against which it will compare the input with.
+And these ensure that the port can only be 8080, or 80,
+and we're passing the variable itself to compare against. And finally,
+we're using the can function to ensure that,
+depending on the return code of this function,
+a two or a false is returned to the condition.
+If a false is returned to the condition,
+an error message shown here will be thrown out and the deployment will stop. So,
+now that we have seen the variable and its validation,
+let's go back to looking at our main dot tf file.
+So we're back into the code. And finally,
+we'll be talking about the output block here.
+We're setting the name of our output to URL and we're passing it an optional
+description parameter, which is browser URL for container site.
+And we're setting the value in this output,
+with a couple of built-in Terraform functions.
+The first function is the joint function --
+which basically takes as input the separator with which it will concatenate all
+the strings being passed to it -- and then the list of strings.
+We can tell that this is a list of strings by looking at the square braces,
+which encompass both these strings. Now the first string is a static string,
+which is http colon forward slash forward slash local host,
+and the second string is basically the typecasting or conversion of a number to
+a string using our built-in typecasting function in Terraform known as to
+string.
+We're passing it down the value of the external underscore port variable.
+We have our dot external underscore port. Now,
+remember that this variable is of type number,
+and the joint function can only concatenate strings,
+so if we were not to typecast this variable,
+there'll be an error because joint cannot concatenate numbers.
+We're using the to string function to convert this number into a string and then
+concatenate it with this string using the colon, which will give us back a URL,
+which you can navigate to on your browser.
+So now that we've gone through all the code,
+let's clear the screen and issue a terraform init.
+Now this terraform init command will make sure that the right provider is pulled
+down from the public registry of Terraform.
+It will make sure that the Terraform version being used is greater than or equal
+to version 0 dot 13, and finally,
+it will also ensure that the bucket that will be used as the backend remote
+storage exists. If it doesn't exist, this command will error out.
+But in our case, we know that the bucket does exist,
+so this command should go through successfully. So we'll hit enter.
+We're just pulling down the Docker provider,
+and we're actually done with initialization. And you'll notice right at the top,
+it says,
+"Successfully configured the backend S3," which means that our initialization
+command was able to find the S3 bucket that we created.
+And now we're ready for storing the state file remotely. So,
+let's clear the screen and next issue the Terraform plan command to review
+whatever code is going to deploy.
+And you'll notice that it is going to add two new resources,
+one of which is going to be the Docker image,
+and the second one will be the Docker container.
+So we'll clear the screen again and now finally deploy it all.
+We'll type yes and hit enter.
+And it's pulling down the Docker image for Nginx that is a resource in our code.
+And that was pretty quick,
+but it also created the container and it has returned the output,
+which is the URL output,
+so that we can verify the site which is running on our Docker container. So,
+let's head over to the browser and test this out.
+And there it is. Our Nginx web server is running,
+and we have successfully retrieved its homepage. Now,
+let's go back and test the validation of the variable that we used. So,
+if you clear the screen and take a quick look at the variables dot tf file,
+it says here that if we were to pass any port other than 8080, or even 80,
+the deployment would fail. So,
+let's go ahead and explicitly pass a port number other than 8080 or 80.
+So, I'll clear the screen and issue the command terraform apply.
+We'll pass the hyphen vr --
+var flag and pass in an explicit value for our external underscore port.
+We're able -- we'll pass the value 8181,
+and let's see what happens. Now.
+Our validation has picked up the wrongly provided port and told us that the
+board values can only be 8080 or 80,
+which was the error message that we set in the validation. So,
+this is a nice little feature if you want to save yourself the headache of
+having to find midway between your deployment that a value pass was illegal.
+Just have Terraform check for validation right at the beginning and save you the
+time of rolling back. Now,
+let's clear the screen and verify that our state file is in fact stored in the
+S3 bucket. We'll use the AWS command for retrieving the file,
+so let's get out the backend dot tf code.
+And now we'll issue the AWS call -- AWS hyphen hyphen
+profile
+demo s3 ls s3 colon forward slash forward slash.
+We'll put in the name of the bucket,
+and then we'll pass the name of the state file.
+And in fact, we're trying to copy the file over to take a look at it,
+so we'll go back and change the ls to cp,
+which will copy over the file to our local system.
+And then you have it. The state file, which was stored remotely in AWS S3,
+has now been copied locally for our perusal.
+And let's open up this file, actually.
+So this file, again, is a big JSON dump, which contains details of all sorts.
+You'll notice that the output returned to us at the end of the successful apply
+is also here -- URL, and then the actual URL value.
+It also gives us the details about the provider that we used and other details
+about the Docker deployment in this case. So, it gives us the IP addresses,
+all the image IDs, and all the internal networking data as well.
+So, we'll quit out of this, and now finally,
+we'll actually clear out or clean up our deployment. So,
+we'll clear the screen and issue the command terraform destroy,
+and we've been able to successfully clean up and destroy all the components that
+we deployed using this code. So,
+this was a demonstration of how to store state files remotely,
+and in this example, we showed you how to do that in AWS S3.
+Thank you for going through this lesson.

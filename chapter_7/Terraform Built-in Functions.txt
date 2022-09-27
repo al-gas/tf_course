@@ -1,0 +1,84 @@
+Hello, Cloud Gurus! It's time to learn about Terraform built-in functions.
+This is one of the coolest features of Terraform that will definitely help you
+open up the possibilities with Terraform. So let's dive right in.
+So Terraform already comes bundled with all the built-in functions.
+You don't need to use any additional providers or modules to use these
+functions. Now, remember that when I say built-in functions,
+that's exactly what I mean.
+You cannot create your own user-defined functions like in a programming
+language. You can only use what Terraform provides by default -- though,
+I'll have to admit that the list is pretty extensive and grows every year.
+You can use these functions inside various places in your Terraform code;
+for example, resource and data resource blocks, provisioners,
+variables, and the likes.
+The general syntax of the function is just like how you would invoke functions
+anywhere else in a programming language.
+You pass the function some arguments and get values in return.
+The built-in functions allow you to write flexible and dynamic Terraform code.
+Let's look at a quick example of how it does that.
+So we've got a snippet of Terraform code showing a variable and an AWS resource.
+We're giving the AWS resource a tag, and for that,
+we are using the join built-in function. This function takes two arguments,
+namely: the separator, which you want to join strings with,
+and the list of strings to join together. So
+for example,
+the end result of the join function executing will join the string terraform
+with the value of the variable project-name, which by default, in this case,
+is prod.
+So we'll get the terraform-prod as the end result of the execution of the join
+function.
+There's a huge array of very cool functions that you can find on the link below.
+A few examples of such functions are: the file function,
+for inserting files into your resources where applicable; max function,
+for determining the max integer value from a provided list;
+and the flatten function,
+to create a singular list out of a provided set of lists.
+Let's quickly hop onto a CLI and check out how we can test the expressions and
+built-in functions in Terraform. So
+I'm logged into a CentOS 7 Linux virtual machine,
+and I've got Terraform installed on it.
+The Terraform console command provides an interactive console for evaluating
+expressions.
+If the current state of your deployment is empty or has not yet been created,
+the console can be used to experiment with expression syntax and built-in
+functions, which is what we're going to do exactly right now.
+The way to do that is via executing the command terraform console.
+Once we execute
+this command,
+it will drop us down into the interactive console CLI and then you can test
+out the built-in functions. So let's go ahead and do that.
+So now we are in the Terraform console's interactive CLI.
+Let's test out the max function.
+So we'll invoke it using the following statement.
+So we're passing the max function, a number of values, which are integer.
+And once I hit enter,
+it's going to return to us the greatest value from the list of values entered.
+Let's look at another function.
+This function returns to us a UTC timestamp. Now,
+let's look at the join function.
+The join function expects a separator as the first argument,
+so we'll be giving it the separator underscore and then a list of strings that
+we want to concatenate using that separator.
+We'll close the function down. And once we hit Enter, the result is acloud_guru,
+which is the concatenated end result. Now let's look at a final function,
+which I believe is very useful,
+especially when you're trying to weave in flexibility into your Terraform code.
+The function is contains function. So let me paste that in.
+The contains function basically takes in a list of elements and searches it for
+the value that you want to provide to it. So in this case,
+we are passing it a list of values, such as acloud, guru, integers 1, 2,
+and 3. And we're asking it to search for the value guru inside this list.
+So once we hit Enter, this fucntion will either return true or false.
+In this case, it was able to find the string guru,
+therefore it returned the value true. However,
+if you go back and ask it to search for the string 5,
+we get the return value of false because it couldn't find the 5 string value
+inside this list.
+So this is a quick way of testing out the built-in functions and different
+expressions within Terraform.
+It's a really nice utility for testing out all these functions without the
+hassle of having to run actual Terraform deployments.
+To quit out of this Terraform console simply press control C or control D.
+So these, in a nutshell, are the Terraform built-in functions,
+and you can use them in your Terraform code again,
+to make it more flexible and dynamic. Thank you for going through this lesson.

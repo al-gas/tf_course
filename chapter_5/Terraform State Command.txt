@@ -1,0 +1,129 @@
+Okay, Cloud Gurus. Welcome to this lesson on Terraform State Command.
+Let's dive right in! So,
+let's talk about Terraform state first.
+Terraform state is extremely important to Terraform.
+Without tracking the state of infrastructure, Terraform cannot work.
+It maps real-world resources to resources defined in your Terraform code or
+configuration. By default,
+the state is dumped into a file called terraform.tf state
+locally,
+but it can be stored remotely in services such as AWS S3 as well.
+Before Terraform modifies any infrastructure,
+it checks and makes sure that the state file is up-to-date with the real
+deployed infrastructure.
+Another important thing that the Terraform state file tracks is the dependency
+between resources deployed. For example,
+Terraform must know that it needs to configure a subnet before it can deploy a
+virtual machine in the AWS cloud.
+The state file also helps boost deployment performance by acting as a cache for
+resource attributes,
+which avoids dev from having to make extra API calls to the underlying
+infrastructure vendor.
+So what does the Terraform state command really do? Well,
+it basically is a utility for modifying and reading the Terraform state file and
+is used for advanced state management. Now,
+normally you wouldn't need to mess with the Terraform state file outside of the
+core workflow of Terraform,
+but there are some scenarios in which you might want to tweak the state outside
+of the Terraform plan-apply workflow to remove or change resource attributes
+that are being tracked by Terraform. So,
+what would you really need that Terraform state command for?
+Let's look at some scenarios. As we mentioned,
+it's used for advanced state management.
+You can remove a resource so that it's not tracked by Terraform. And of course,
+you can manually tweak the Terraform state file to your heart's content,
+although that is not recommended if you're not an advanced user of Terraform,
+but that is a possibility with the Terraform state command.
+And at the very least,
+you can use the Terraform state commands list subcommand to drag the details of
+the resources and the names of the resources,
+which are being managed by Terraform.
+Now let's have a look at some of the common Terraform state subcommands.
+The terraform state list command will list all the resources tracked by the
+Terraform state file.
+It's a nice way of looking at resources instead of having to open up the
+terraform.tf
+state file and look at the lenti JSON stored in it.
+The terraform state rm command deletes a resource from the Terraform state file,
+thereby untracking it or unmanaging it from Terraform.
+The terraform state show command shows the details of a resource and its
+attributes that are tracked by Terraform in the state file. Now,
+let's hop onto my local system for a quick little demonstration of the Terraform
+state command and see some of these commands in action.
+So I've written down a sample code,
+which spins up a container using the Docker provider for Terraform.
+Now we don't need to focus too much on the intricacies of the Docker provider or
+the resources that we've used.
+The only thing that we do need to care about in this demonstration is the
+resource tracking through the Terraform state command.
+But we'll go through this quickly.
+We're spinning up a Docker image with the linked Terraform to pull down the
+center seven image,
+and then we're asking it to spin up a container using the image that we just
+pulled down and run the command inside the container so that it doesn't die out
+immediately. So this is what it does.
+It just simply pulls down the image and starts a container on my local system.
+So, let's clear the screen and issue the Terraform apply command. Two resources
+will be added. The first one is the Docker image,
+and the second one is the Docker container. We'll type yes and hit enter.
+And that was fairly quick.
+So let's clear the screen and use terraform state list command to list out all
+the resources that Terraform is tracking.
+So as we saw in our code, these are the only two resources that we created,
+and these are the only two resources that we can see here.
+So that's an easy way of seeing all the resources that Terraform is currently
+tracking.
+Now we can also issue a quick docker ps command and ensure that the
+container that we spun up using Terraform is available from the Docker command
+as well, which we can see here. Now,
+let's use this stage show sub command to look at some of the details of the
+Docker underscore container or send to a resource. So,
+let's copy this over into a buffer, clear the screen,
+and issue the command terraform state show and then the name of
+the resource.
+And that's a lot of details.
+And these are the same details that the terraform dot tf state file has in it.
+But the terraform state show command has listed out the details in a nice format
+for us only for the resource that we asked it to show us.
+And you can notice the IP addresses, the details of the network,
+and all the miscellaneous details for the Docker container.
+Imagine for a second that you really wanted to retain the resources deployed to
+Terraform because you love them so much,
+or there's something important on them and don't want them to be destroyed when
+you issue a terraform destroy command. Well,
+there is a command exactly for that to help you unmanage a resource from within
+Terraform. We also saw it on the previous slide.
+It's the terraform state rm command that we mentioned here.
+So let's go back and test this command out. And before I do that,
+I want to issue a disclaimer that do not use this command unless you are an
+advanced Terraform user. Otherwise,
+you're going to mess up your Terraform deployments. So,
+let's list out the resources being tracked by Terraform first using the
+terraform state list command, copy this over into buffer --
+and before we do that,
+let's confirm through the Docker command that this container is, in fact,
+still running. The command for that is docker ps.
+And we can see that the Terraform spun-up container is running with the name
+terraform dash centos. And if you were issuing terraform destroy right now,
+this container would be killed off,
+but we don't want that to happen because this is our beloved container.
+So the command for unmanaging this resource,
+which is mapped to this container in Terraform,
+is terraform state rm.
+And then we'll paste down the name of the resource,
+which is Docker underscore container or centos.
+And as the command's confirmed,
+the resource has been removed and is now not managed by Terraform anymore. So,
+let's issue the terraform destroy command now and see what happens.
+We'll type yes and hit enter. And one resource was destroyed,
+which was the Docker underscore image resource.
+Let's clear the screen and issue the docker ps command to see if our container
+is still running. And there it is.
+It's still running because it was no longer managed by Terraform.
+Terraform did not go out and destroy it on its way out to destroy all the other
+resources. So this, in short,
+was a few use cases of the terraform state command. It can be extremely useful.
+However,
+remember that it is only for advanced state management and not recommended for
+users who don't understand the implications of some of these commands.
+Thank you for going through this lesson.
