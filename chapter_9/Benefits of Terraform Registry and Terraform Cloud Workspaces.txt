@@ -1,0 +1,84 @@
+Hello, Cloud Gurus! In this lesson,
+we'll be looking at Terraform Registry and Terraform Cloud workspaces and what
+benefits they bring to your infrastructure-as-code deployments.
+We've already seen Terraform Registry in action. In most instances,
+throughout this course, whenever I've used a provider or a module,
+it was fetched via the Terraform Public Registry.
+The registry is a repository of publicly available Terraform providers and
+modules.
+It's an integral part of Terraform's adoption by the masses because it's
+publicly accessible to anyone using Terraform. It has official providers,
+as well as third party-provided modules.
+Fetching a provider or module from the Terraform Registry is built into
+Terraform's workflow by default.
+It will look for the provider or module in the Terraform Registry first,
+before it goes off to search for that same thing in a private registry or
+repository. All of this happens when you execute the Terraform 'init' command.
+Being an open source proponent,
+HashiCorp allows for anyone to be able to contribute their own modules to the
+Registry.
+The Registry also provides useful links to GitHub pages for the code of the
+hosted providers and modules and documentation of all the hosted content.
+Here's the URL for the Registry.
+With the links provided in the hosted GitHub code to various open source
+providers and modules,
+you can collaborate with HashiCorp and other third-party providers to push for
+feature requests and even changes to the code. The coolest thing,
+in my opinion,
+about the Registry is that you can simply declare an AWS provider or some
+module,
+and Terraform knows to fetch it from the Registry and the whole experience seems
+quite seamless. Now,
+let me quickly head to the browser and give you a little tour of the Terraform
+Registry. So I have browsed to the registry.terraform.io URL,
+and you'll notice that, on this page,
+we can either search for providers or modules.
+So let's go ahead and search for the AWS provider.
+We have a host of providers returned to us.
+The one which is official is indicated by this yellow ribbon.
+Everything else you'll see are custom providers provided by the community.
+So let's click on the official AWS provider by HashiCorp.
+And here you can notice that,
+in addition to a little description and other modules which are related to this
+module,
+you can also find a link to the GitHub repo which hosts the code for this AWS
+provider.
+Heading over to the GitHub repo page for the AWS provider,
+you can go and clone it over, make changes to it,
+and even submit it back for review by the HashiCorp team.
+Also on the Terraform registry page for AWS provider,
+you can click on the documentation tab and get detailed documentation with
+examples for all the resources which are provided by this AWS provider.
+Now, let's talk about Terraform Cloud workspaces. Although, in essence,
+the workspace feature in Terraform Cloud does the same thing as the open source
+Terraform workspace feature,
+it is slightly different in the sense that it is all hosted in the cloud
+instead of your local system.
+And you can interact with the Cloud workspace using APIs as well.
+Think of Cloud workspaces as directories for distinct deployments,
+hosted in the cloud where you don't need to worry about segregation, storage,
+and even security of your workspaces.
+The Terraform Cloud workspaces store all the state files in Terraform's managed
+cloud and can be shared between organizations.
+Another feature of the Terraform Cloud workspaces is that Terraform deployment
+execution and all related activity is recorded via Cloud workspaces,
+and that allows for auditing and investigating deployments more readily and
+easily. And finally,
+another cool thing with Cloud workspaces is that you don't need to have a local
+CLI terminal with Terraform installed to kick off deployments with manual
+'terraform apply's. You can trigger deployments via a workspace's API,
+or version control system triggers such as GitHub actions,
+or even the Terraform Cloud user interface,
+and HashiCorp will execute your 'plan', 'apply',
+and 'init' commands on their own hosted and managed VMs in the HashiCorp
+cloud. So, to recap it all,
+we looked at the benefits that Terraform Registry and Cloud workspaces provide.
+With Terraform Registry,
+we have a public repository of modules and providers where you can find
+documentation and even contribute yourself. With Cloud workspaces,
+think of it as a hosted workspace offering,
+which takes the burden of storing your state, variables, and secrets,
+in addition to managed Terraform deployment runs in HashiCorp's managed VMs.
+So this is all you need to know with regards to the Terraform certification
+about Terraform Registry and Terraform Cloud workspaces.
+Thank you for going through this lesson.

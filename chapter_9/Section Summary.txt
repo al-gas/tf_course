@@ -1,0 +1,37 @@
+Hello, Cloud Gurus, and welcome to this section summary of our section 9,
+Terraform Cloud and Terraform Enterprise offerings.
+So let's go through what we really went through in this section. The first part
+was the security best practices.
+So you've got the best practices for securing your secrets --
+that is the secrets which are going to be used in your deployments --
+as well as the deployment code itself,
+so that it's not doing anything malicious and spinning up thousands of EC2
+instances.
+So we learned about Sentinel and how it enforces the security inside your code
+so that the code does not do something malicious or dangerous.
+And Sentinel has its own language, that's what we learned.
+We also learned about the Vault Provider,
+which is a secrets management software,
+and it can securely inject secrets on the fly into your Terraform code,
+and it can also rotate them, encrypt them, and also encrypt them in transit.
+Moving on, we learned about Terraform workspaces. We learned about the
+difference in Terraform Open Source and the Terraform Cloud workspaces.
+How Terraform OSS workspaces generate and drag different state files against the
+same Terraform code in a directory, which is hosted locally on your system;
+however, you can save the state files in a backend configured by you.
+And as for Terraform Cloud workspaces, we noted that it is hosted in the cloud,
+which is obviously managed by Terraform, and it can track configuration or code,
+variables, state, and secrets.
+And if you want to interact with it programmatically,
+Terraform Cloud workspaces also have an API for that. And finally,
+we summarized the benefits and features of Terraform Cloud,
+which were generally themed around collaboration, such as API-based workflows,
+version control, and trigger-based deployments.
+It also offered the nice feature of Sentinel integration,
+which is policy-as-code framework and enables you to vet your code before it
+goes out and gets deployed.
+And also some of the other features which make Terraform Cloud lucrative are
+cost estimation, shared workspaces, and access-based controls.
+So this, in a nutshell,
+was what we covered throughout the section of Terraform Cloud and Enterprise.
+Thank you for going through this lesson.

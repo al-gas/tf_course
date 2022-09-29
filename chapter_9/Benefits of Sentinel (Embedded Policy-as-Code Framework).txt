@@ -1,0 +1,51 @@
+Hello, Cloud Gurus. Welcome to this lesson on HashiCorp Sentinel,
+which is a feature provided with the Enterprise version of Terraform.
+We will look at how this framework can help secure Terraform deployments.
+Basically,
+HashiCorp Sentinel is a framework which enforces adherence to policies within
+your Terraform code. In other words,
+it's code which enforces restrictions on your Terraform code.
+This might sound a bit complex, but let me elaborate a little more.
+Sentinel has its own language, which you write policies in.
+These policies ensure that dangerous or malicious Terraform code is stopped,
+even before it gets executed or applied via the terraform apply command.
+It is designed to be approachable by non-programmers,
+so its code is pretty much human readable.
+The Sentinel integration with Terraform runs within Terraform Enterprise after
+terraform plan and before terraform apply.
+The policies have access to the data in the curated plan,
+the state of the resources at the time of the plan,
+and the configuration at the time of the plan.
+It has quite a few benefits.
+You can apply Sentinel policies against your Terraform code to sandbox your
+deployments. For example,
+stop a dev user from deploying into a prod workspace and kind of act as a
+guardrail against accidental deployments.
+It codifies the process of security enforcement in Terraform code,
+which allows for Sentinel policies to be version controlled and shared across
+the organization.
+It can help standardize security testing and automation right into your
+Terraform deployment pipeline,
+as it automatically runs before your Terraform deployments.
+So there's quite a few benefits of using this feature in the Terraform Cloud
+Enterprise. Let's look at some of its use cases.
+You can use Sentinel policies to enforce CIS security standards for your AWS
+accounts.
+You can also use it to ensure that only a certain type of EC2 instance can be
+spun up by your Terraform code; for example, t3.micro.
+Another example is a Sentinel policy which ensures that no security groups in
+AWS openly allow traffic from all IP addresses on port 22.
+Sentinel policies are written using the Sentinel language.
+Here's a sample Sentinel policy. Now,
+a disclaimer before I show you the Sentinel policy:
+you do not need to know or even understand Sentinel policies,
+as you will not be tested on them in the exam. However,
+I thought it would be cool to just show a little snippet of Sentinel policy code
+here. In this code,
+we're basically having Sentinel check that any AWS EC2 instances being
+created through our Terraform deployment have at least one tag applied to them.
+Otherwise, it will fail and cancel the deployment. So,
+to summarize it,
+in this lesson of our main objective was to know what Sentinel is and what it
+does in general, and how it can benefit you in your Terraform workflow.
+Thank you for going through this lesson.

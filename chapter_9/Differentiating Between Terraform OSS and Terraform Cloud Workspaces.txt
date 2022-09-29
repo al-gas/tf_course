@@ -1,0 +1,48 @@
+Welcome, folks! In this lesson,
+we'll be comparing the workspace feature offered across Terraform Cloud and
+Terraform open source offerings.
+The workspace feature offered in the freely available Terraform version
+basically creates alternate state files against code in the same directory.
+It does that so you can issue multiple,
+distinct deployments against the same code. For example,
+you could have a workspace for developer deployments and another workspace for
+production deployments set against the same Terraform code.
+It does that by creating a separate directory within main Terraform directory
+called the 'terraform.tfstate.d' directory,
+where it houses a folder for each state file tracked by the different
+workspaces. Now,
+remember that this is the way the Terraform OSS workspace (or Open Source
+workspace) feature works.
+We have already gone through a lesson where we discussed the Terraform Cloud
+workspaces. So in this lesson,
+our main objective would be to compare and contrast the OSS workspace and the
+Cloud workspace feature offered by Terraform.
+We'll be comparing namely the components -- that is the configuration, secrets,
+variables -- and we'll be comparing them against the normal workspace --
+that is, the local or Terraform OSS workspace -- and the Cloud workspace.
+So let's start off with the Terraform configuration or code.
+In the Terraform OSS workspace, your code is stored on disk. Whereas,
+in Cloud workspace, it is stored in linked version control repository --
+so something like GitHub or Bitbucket --
+or it can also be periodically uploaded via API or CLI
+calls to the Terraform workspaces in the cloud. For local workspaces,
+variables are stored in the .tfvars files,
+as CLI arguments, or in shell environment.
+So this would be on your own local system. Whereas, in the Cloud workspace,
+all the variables associated with the deployment are stored in the Terraform
+cloud itself.
+The state file for the OSS workspace is stored on disk or
+in a remote backend configured by you. Whereas,
+in the Cloud workspaces, the state files are stored in the workspace.
+And finally,
+credentials and secrets are stored either in shell environments or entered at
+prompts when you're issuing 'terraform apply' command. Whereas,
+in Cloud workspace,
+credentials and secrets are stored in the workspace configuration as sensitive,
+hidden variables.
+So now that we have compared and contrasted both these features,
+you'll notice that they are trying to offer the same utility; however,
+one of them is more managed and built for collaboration across teams.
+So this introduction was a comparison between Terraform Open Source workspace
+feature and the Terraform Cloud workspace feature.
+Thank you for going through this lesson.

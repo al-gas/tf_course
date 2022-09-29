@@ -1,0 +1,96 @@
+Hey, Cloud Gurus. Welcome to this lesson.
+As we wrap up the course and our preparation for the HashiCorp Certified
+Terraform Associate exam. HashiCorp
+has some really nice documentation around preparation for the exam.
+There are three resources in particular on the official site,
+which I would like to bring your attention to.
+The first one is the exam study guide. The second one is the exam review guide,
+and then we've got these sample questions that are available on the official
+HashiCorp website.
+The exam study guide lists the resources you should study if you're preparing
+for the exam from scratch.
+The resources listed are in order of difficulty so that you can progress to the
+list in that order. You've
+got the exam review guide,
+which has a direct mapping of each HashiCorp Certified Terraform Associate exam
+objective to where it is covered in the HashiCorp's documentation and training.
+So, you can go down under this table and map where the documentation for this
+objective resides. For example, explain what IaC is,
+is giving you two links to within the HashiCorp documentation,
+but you can go and read up about this objective.
+So this is pretty neat for when you are summarizing your preparation and going
+through a quick revision as well.
+And then we have the sample questions,
+which give you an idea of what to expect in the exam. So,
+we've got true and false, multiple choice questions,
+which actually show you the snippets of code,
+which you might come across in the exam.
+So, let's talk about preparing for the exam.
+Because Terraform as a tool was born out of need to automate cloud deployments,
+it's recommended to come into this exam with basic understanding or
+working of at least one public cloud vendor, such as AWS or GCP.
+If you're unfamiliar with the public cloud,
+I would highly recommend to go through A Cloud Guru's
+catalog on the public cloud. The
+exam stresses not only on how, why, and when to use Terraform,
+but also on the best practices when using Terraform.
+Among them is the security best practice. For example,
+using Sentinel and Vault Provider with Terraform.
+You need to know that Terraform workflow very well because it will help enable
+better DevOps practices and collaboration.
+Not to mention that the Terraform commands adhere to this workflow of write,
+plan, and apply.
+Going into the exam, you need to be familiar with a few commands,
+which you'll be using day-in, day-out when actually working with Terraform,
+commands such as init, plan, apply,
+state, format, and validate. Just to name a few.
+One thing that I can't stress enough when working with Terraform and also going
+into this exam is to know that Terraform state mechanism very, very well.
+Because this is a feature critical to Terraform's working.
+Without being able to keep track, Terraform would not work at all. So,
+know about the state command, why, and when to use it, the state file,
+ways of securing it and using it for collaboration.
+Because you may get snippets of code to look at for answering questions.
+It would be best to familiarize yourself with HCL or HashiCorp configuration
+language. Almost all the code that you've seen in the course is in HCL.
+We've got extensive labs and demos on both HCL as well as Terraform state
+mechanism. So, be sure to go through them to solidify your concept.
+A section of the exam objectives is dedicated to Terraform cloud and its
+enterprise offering. So, when you go into the exam,
+know what's the difference between Terraform open-source or OSS and
+paid offerings, such as Terraform enterprise offering,
+which offers Sentinel integration cost estimation on Terraform plan runs,
+storage of state in Terraform cloud by default.
+Know that there are different pay tiers and also know the difference between
+Terraform OSS workspace and Terraform cloud workspaces.
+I will urge you to get hands-on the Terraform. So,
+go through all the labs in this course,
+try to finish them without any hints or instructions as that's the best way to
+learn Terraform. Finally,
+a few reminders before I finish this lesson and let you ride off into the
+sunset.
+The exam tests you on Terraform version 0.12 and higher.
+If you've worked with versions older than 0.12,
+then please note that there has been drastic changes in the syntax for HCL as
+well as ton of new features being added post version 0.12. So,
+be sure to practice with version 0.12 or higher for this exam.
+The exam will have between 57 to 60 questions. Though,
+I've heard from other test takers specific numbers like 57 too,
+but we'll keep it within this ballpark.
+Our trick that I use to help me through my attempt of this exam was to flag
+questions, which I found I could not answer right away.
+I would try my best to narrow down the correct options and move ahead.
+Although there's no guarantees of this,
+but sometimes later questions in the exam can actually help answer or eliminate
+incorrect choices from earlier questions that you might have flagged. So,
+try not to waste too much time or overthink about one single question when going
+through the exam for the first time. So,
+this is it we're done wrapping up.
+I would like to congratulate all of you who have gone through this course.
+Pat yourself, on the back for all your hard work.
+I hope you feel excited, not just for the exam and passing it,
+but for all the knowledge that you've gained about Terraform and using it in the
+real world. In the end,
+I'd like to thank you all for choosing to go through the course and giving me an
+opportunity to be your guide. It's been an honor. From A Cloud Guru,
+this is Moosa Khalid signing off.

@@ -1,0 +1,25 @@
+How's it going, Cloud Gurus. Welcome to this lesson,
+where we'll summarize the features and benefits of the Terraform Cloud offering.
+Now let's recap some of the major features of Terraform Cloud.
+We have the remote Terraform executions via Terraform Cloud.
+Then we get the Cloud workspace,
+which offers an organization-based model where each organization or team can
+have their own workspace. And this enables cross-workspace sharing of data.
+Integration with version control systems, such as GitHub and Bitbucket,
+in addition to VCS-triggered runs is a pretty nice feature.
+You can manage
+state remotely via CLI-based integration with the Terraform Cloud.
+This also offers better resilience and security of state file within the
+Terraform Cloud itself.
+If you're concerned about security or have proprietary modules,
+you can host them in private registries offered by Terraform Cloud. And,
+of course, Terraform Cloud offers API, UI, and CLI-based access,
+which gives you great flexibility when working with it. And finally,
+you get cost estimation feature,
+which can look at your terraform plan output and estimate
+the cost of deployment. This feature is currently available for AWS, GCP,
+and Azure.
+Integrations with Sentinel for enforcing policies on your code before it is
+deployed is also a cool feature.
+So this in a nutshell was a summary of Terraform Cloud.
+Thank you for going through this lesson.

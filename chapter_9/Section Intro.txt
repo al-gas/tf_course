@@ -1,0 +1,13 @@
+Hello, Cloud Gurus!
+Welcome to this section on Terraform Cloud and Terraform Cloud
+Enterprise Offerings. In this section,
+we will cover some best practices,
+keeping in view the other features offered by HashiCorp in its Terraform Cloud
+and Enterprise offerings. For example,
+we'll look at the best practices to secure our Terraform code and deployments
+using HashiCorp Sentinel and the Terraform Vault Provider.
+We'll also compare and contrast the workspace feature offered by Terraform Open
+Source Software (or OSS) and the Terraform Cloud offering.
+Finally,
+we'll summarize it all at the end with the benefits of using Terraform cloud and
+its various features. So, if you've got time, join me in this section!
