@@ -1,0 +1,74 @@
+Hello, Cloud Gurus! Welcome to this lesson on Terraform Type Constraints.
+Type constraints control the type of variable values that you can pass to your
+Terraform code. We've already seen the type constraint, primitive,
+which allows for a single type of value to be assigned to a variable,
+such as a number type, string type, or boolean (or bool) type.
+Examples of these could be: replicas = 3,
+which is a number type; name = cluster2,
+which is enclosed between double quotes and is a string type;
+and backup = true, which is a bool type,
+the converse of which would be false. On the other hand,
+what we want to focus on in this lesson, are the complex types,
+which include multiple value types in a single variable.
+Such value types can be constructed using list, tuple, map,
+or object data structures.
+An example of this could be a variable which has multiple values assigned
+within it.
+The complex types can be broken into two further types,
+the first one being collections.
+Collection types allow multiple values of a single or one primitive type to
+be grouped together against a variable. For example,
+you can have a list of type strings, or you can have a map of type numbers,
+or you can have a set of type strings,
+but you cannot mix more than one type against a single variable.
+An example of the collections complex type is as follows.
+You've got a variable declared inside your Terraform code of the type list of
+strings. And in the default value,
+you're assigning two separate strings inside the list to that variable as a
+default value.
+The next complex type of variable is called structural.
+Structural types allow multiple values of different primitive types to be
+grouped together. So, as opposed to the collections type,
+which only allows a single type of value within a variable,
+the structural type allows more than one type of values assigned within a
+variable. For example, you can have an object which has values of type strings,
+bool, or even numbers.
+And you can group similar variables using the tuple or set variable types.
+An example of this could be a variable type which allows items of type string,
+number, and bool against it.
+Let's look at an example of a structural complex type.
+So here we've got a variable defined in our Terraform code,
+and we have defined it using the object constructor.
+Now within that object constructor, we are passing in two primitive types,
+which are different;
+the first one being name = string and the other one being age =
+number.
+Both of these primitive types within this object combine to form a complex
+structural constraint.
+Another type of constraint within Terraform is the any constraint.
+Any is a placeholder for a primitive type which is yet to be decided.
+So Terraform allows you to leave out the type of a variable when you're defining
+it, because it's an optional field.
+And Terraform makes a best effort attempt to figure out what kind of variable
+you've passed and assign it a proper primitive type.
+The actual type of a variable which has been assigned the any constraint will be
+determined at runtime by Terraform.
+An example of the any constraint is as follows.
+So you've got code where you're defining a variable in Terraform,
+and within the type value you've passed to the constructor list the type
+any. Now,
+Terraform will recognize all values passed inside the default value of this
+variable as numbers and therefore assign the type of the list as numbers.
+So in this lesson,
+we've basically seen how we can create complex variable types,
+which either contain a list of same type of variables or even a list of
+different type of variables,
+thereby allowing us more flexibility in the type of values that we pass to our
+Terraform code.
+Just remember that the collections complex type allow you to pass a single
+type of value against a variable. It can be a list,
+but the type of the values passed inside the list have to be a single type,
+either number, string, or bool. As opposed to the structural complex type,
+which allows you to pass more than one type of values against a variable.
+I hope that you found this lesson informational. Now, if you've got time,
+join me in the next lesson.

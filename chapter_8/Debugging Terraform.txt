@@ -1,0 +1,57 @@
+Hello, Cloud Gurus. Welcome to this lesson on Debugging Terraform.
+Troubleshooting is an inevitable part of software. In this lesson,
+we'll be learning to enable verbose logs for Terraform and see what utility they
+provide in investigating issues. In Terraform,
+tf underscore log is an environment variable which enables verbose logging for
+Terraform and, by default,
+sends the logs to standard error output or your screen.
+It allows for five levels of verbosity.
+The most verbose of it is the trace option. However,
+it's also the most reliable one, as per HashiCorp,
+and also provides Terraform internal logs in addition to backend API calls made
+to providers.
+You can also redirect the output logs to a file by using the variable
+tf underscore log underscore path, which takes a file as an input.
+By default, tf underscore log is disabled. To set its value,
+we can use the export command in Linux like below. Now,
+let's hop onto a command line and see the Terraform debugging in action.
+So I'm logged onto my command line,
+and I'm in a folder with a sample code for Terraform.
+It spins up a container using the Docker provider.
+Now the focus of this lesson is not the code itself,
+so let's clear the screen and export our tf underscore log variable and tell it
+to trace level.
+Now, once I issue the terraform init command,
+you're going to see a lot of logs slide by,
+and these are all the verbose logs,
+which were enabled due to the tf underscore log value being sent to trace.
+You can see that this is a lot of information.
+It returns to you a lot of attributes, such as the configuration file paths,
+the versions for Terraform and Golang, and a lot of other ancillary features,
+which help enable the terraform init command to work. Now,
+imagine if you had to read through all these lines on your screen.
+It would be much nicer to have it in a file,
+and we can do that using the tf underscore log and the score path variable. So,
+let's send that variable,
+and we'll send it to dump the logs into a file called terraform dot log,
+which will be in the same directory that we're in.
+Now, let's issue a terraform plan command. This time,
+you wno't see the verbose logs going through your screen. However,
+you'll still see the output of terraform plan command. There it is.
+It's going to create new resources. However,
+we don't need to go ahead and actually apply this.
+Let's clear the screen and go into the terraform dot log file that has been
+newly created for us. Now, this file contains all the logs,
+which would have been otherwise sent to your standard error or screen,
+which might've been a bit difficult to read. In here,
+you can parse it or go through any amount of logs that you want to in your own
+time. Notice how it's going through the plugins.
+Seeing if the plugins are available.
+It's also looking for various files and looking at the workspace,
+then it's working in.
+So that's a lot of information which has been given to us by enabling the debug
+login for Terraform. And in essence,
+if you ever were to raise an issue with HashiCorp,
+these are the logs that you would be sending them and that's what they would be
+expecting. So this was a quick overview of the debugging in Terraform.
+Thank you for going through this lesson.

@@ -1,0 +1,70 @@
+Hey, hey, Cloud Gurus! Welcome to this lesson about dynamic blocks in Terraform.
+We'll go through where and when we need to use this feature and show you an
+example of how to use it as well.
+So dynamic blocks help construct repeatable nested configuration blocks inside
+Terraform resources. They can be used inside resources,
+such as resource blocks, data blocks, provider blocks,
+and provisional blocks inside a Terraform resource. Now
+before I show you how dynamic blocks work and how they make your code look
+cleaner, let's first see an example of the problem that they solve.
+Take, for example, this snippet of Terraform code,
+which creates an AWS security group with several rules.
+Each of those rules takes in several inputs and is represented by the ingress
+block in case of this resource.
+This means that for every security group rule in this resource,
+we will need to write a separate ingress block -- which can get very tedious,
+difficult to maintain, bloats your code, and frankly is nothing nice to look at,
+either. And this is where the dynamic block comes in.
+Here's an example of how the same chunk of code from the previous slide can be
+streamlined using dynamic block. So you've got the dynamic block keyword,
+and then you pass it the name of whatever block inside the resource you're
+trying to replicate. In this case,
+it is the nested ingress block inside the AWS security group resource.
+Now inside the dynamic block, we have a for_each loop statement,
+which provides complex values to iterate over.
+The variable passed to the for loop is provided by you, the user.
+The content block defines the body of each generated block and is part of the
+syntax of a dynamic block.
+The ingress variable inside the content block is the iterator argument.
+You can provide it a custom name; however, by default,
+this variable takes the name of the actual nested block that is being worked on,
+which in this case is the ingress block. Now,
+let's take a look at an example of a complex variable that is passed to the
+dynamic block.
+So this is an example of the complex variable that we pass in to the for_each
+part of the dynamic block.
+If you want to learn more about complex variables in Terraform,
+I would recommend going through the Terraform constraint types lesson in this
+course. In this complex variable,
+we are creating a list of objects which contains key value pairs.
+The default value contains two items.
+This is the first item and here's the second item.
+And these are what the for_each loop will be iterating over and feeding into the
+content block.
+So now that we have looked at our complex variable,
+let's go back and take another look at the dynamic block it's used in.
+We're passing in our complex variable to the for_each loop,
+and the for_each loop is plugging in the value of each item iterated over in the
+variable to the ingress variable within the content block,
+using the value attribute via ingress.value.
+Let's revise a couple of things here.
+Dynamic blocks expect complex variable types to iterate over.
+And they act like for loops to output a nested block for each element in the
+variable passed to them. In short,
+they help you make your main code look leaner by cutting down on having to write
+repetitive chunks of nested block resources.
+This way you can group together complex variables,
+which dynamic blocks iterate over in separate files.
+Though dynamic blocks are really good at cutting down the lines of code,
+they can make your code hard to read and maintain.
+So always use them with caution.
+The best practice is to use them when you need to hide details in your code in
+order to make it look cleaner. For example, when writing Terraform modules.
+So this in a nutshell is how we use dynamic blocks.
+We went through an example of how we would convert a resource to use dynamic
+block to cut down on the code and make it more dynamic.
+And we also looked at the complex variable type which is passed to the dynamic
+block. Later on in this section,
+we have a hands-on lab which you can go through and get practical experience
+with deploying resources to AWS using dynamic blocks within Terraform.
+Thank you for going through this lesson.

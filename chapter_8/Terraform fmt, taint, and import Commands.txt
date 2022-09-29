@@ -1,0 +1,103 @@
+Hello, Cloud Gurus, and welcome to this lesson on Terraform format, taint,
+and import commands. So let's look at Terraform format first.
+This command helps in making your code beautiful-looking and consistent by
+formatting it to a standard.
+It makes the code consistent and easy to maintain and read through on version
+control systems as well. And this command is safe to run at any time, really.
+It only modifies the look of the code,
+but it does not change anything else otherwise.
+Its command syntax is simply terraform space format,
+and by default it expects no arguments.
+It looks for all the files ending in dot tf extension and formats them,
+outputting any files which have been fixed for syntax and consistency. So,
+what scenarios will you need to use this command in, you ask? Well,
+before pushing your code to a version control system so that your teams can
+collaborate on it better,
+after upgrading Terraform or its modules in case Terraform or HashiCorp changed
+the syntax or the way a certain block of code is written,
+or any time you made changes to the code, really. So,
+if you made a lot of changes and you don't really want to care about the syntax,
+just save the file and run the Terraform format command on it and let the
+Terraform command work the magic of making your code look beautiful. Now,
+onto the Terraform taint command,
+the taint command basically marks an existing Terraform resource to be deleted
+and recreated. It modifies the state file only.
+So the state file is what tracks all the resources that Terraform created and
+will need to modify or delete,
+and that's where it really marks the file to be tainted.
+And on the next Terrafrom apply after you changed something,
+Terraform recreates the resource,
+so it basically deletes the resource and recreates it.
+But you've got to be mindful that tainting and recreating a resource can cause
+other resources which are dependent on it to be modified as a result.
+For example,
+tainting a virtual machine with ephemeral public IP will cause the public IP to
+change when the resource is recreated.
+The command syntax for using Terraform taint command is terraform space taint
+space the resource address within your Terraform code that you want to taint.
+So, when would you really need to use the Terraform taint command? Well,
+when you want to cause provisioners to run.
+Since Terraform doesn't track provisioners and provisioners only run when a
+resource is created or destroyed,
+you can use Terraform taint command to delete and recreate a resource,
+thereby running all the provisioners that are attached with that resource.
+You can also use the Terraform taint command to replace misbehaving resources
+forcefully. And finally,
+you can use Terraform taint command to mimic side effects of a recreation not
+modeled by any attributes of the resource. For example,
+if there's some sort of automation in a virtual machine,
+which causes it to issue an API call to an external system on creation,
+you can taint it so that it spins up and issues that API call when it starts up.
+Now, let's talk about the Terraform import command. This
+command basically takes an existing resource which is not managed by Terraform
+and maps it to a resource within Terraform code using an ID.
+The ID that we are referring to here is dependent on the vendor infrastructure
+from where you're trying to import the resource. For example,
+to import an AWS EC2 virtual machine, you need its instance ID.
+You can't import the same real-world resource against multiple Terraform
+configuration resources in your Terraform code.
+Terraform itself makes sure that there's one-to-one mapping for all real-world
+and Terraform resources. However,
+it can't control that when you import something from external systems,
+and so it's up to you to make sure you're not importing a resource more than
+once within the same configuration,
+as that can cause unknown behavior in Terraform.
+The syntax we're using the command is terraform import resource underscore
+address (this is the resource name that you want to map to the real-world
+infrastructure resource to) and finally the ID of the real-world resource.
+So, when would you really want to use the Terraform import command? Well,
+when you need to work with existing resources and bring them into the Terraform
+fold, or when you're not allowed to create new resources in an environment,
+or even when you're not in control of creation process of infrastructure and are
+only allowed to manage it once it's been created already.
+And finally,
+a quick little topic that I wanted to discuss at the end was the Terraform
+block,
+which is a special configuration block that controls Terraform's own behavior.
+This configuration block only allows constant values,
+and you can't use named resources or variables within this block.
+It allows you to configure various things with respect to Terraform workflow,
+such as configuring the backend where your state files are stored,
+specifying a required version of Terraform against which your code will run
+(otherwise, it will error out),
+specifying the required versions of a Terraform provider with which your code
+works and making it a requirement,
+enabling and testing experimental features that Terraform releases with each
+release, and also passing metadata to providers and modules.
+Now, let's have a look at an example of the Terraform configuration block.
+In this configuration block, we're putting in a couple of constraints,
+such as requiring that Terraform will only run if the Terraform binary version
+is greater than version 13. We're doing it to this line --
+required underscore version is equal to --
+and then we're passing in a regular expression.
+The other constraint is that our code should only run if the Terraform AWS
+provider version is greater than version 3.
+If any of these requirements are not met,
+you won't be able to deploy infrastructure with code in which this Terraform
+block exists. In this lesson,
+we learned about the salient features of Terraform format command,
+taint command, as well as the import command,
+and the importance of the Terraform configuration block in Terraform.
+There's also a hands-on lab in this section where you can practice with and
+learn about the Terraform format, import, and taint commands in detail.
+Thank you for going through this lesson.

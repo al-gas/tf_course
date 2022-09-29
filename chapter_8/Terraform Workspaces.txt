@@ -1,0 +1,184 @@
+Hello, Cloud Gurus, and welcome to this lesson on Terraform workspaces.
+Terraform workspaces are also known as CLI workspaces and are basically
+alternate state files within the same working directory.
+We know by now that state files are extremely crucial to Terraform's workflow.
+It is Terraform's source of truth.
+By keeping alternate state files for the same code or configuration,
+distinct environments can be spun up.
+We'll see how that's exactly done in a bit. Terraform
+always has a default workspace, which exists and cannot be deleted.
+If you have ever used Terraform and never created additional workspaces,
+then you are definitely using the default workspace that Terraform provides.
+Each workspace tracks a separate independent copy of the state file against
+Terraform code in that directory.
+Let's look at some common Terraform workspace CLI commands.
+We'll also be showing these in action in a demo at the end of this lesson.
+So the terraform workspace new subcommand basically creates a workspace for you
+when you pass in the workspace name,
+and the terraform workspace select command selects or switches to the workspace
+of your choice which already exists.
+These are two of the common commands that you'll find yourself using,
+among the many that are available.
+Why would you really need to use the Terraform workspaces anyways? Well,
+for one, you could test changes using a parallel,
+distinct copy of your infrastructure. As we noted,
+each workspace tracks a separate independent copy of the state file,
+which means that Terraform is going to deploy a new environment for each
+workspace,
+which means that you can test our different environments using the same code.
+It can be modeled against branches in version control, such as Git. For example,
+you could have various workspaces,
+each of which refer to a different environment,
+and you can even commit the state files for those workspaces into Git and keep
+track of them.
+Workspaces are good for sharing resources and enabling collaboration between
+teams. For example,
+the developers in a team can spin up separate workspaces to test out the code in
+a different environment and not mess with the default workspace for production
+environment and thereby living the state file untouched.
+Your Terraform code can leverage the workspaces by using the terraform dot
+workspace variable readily available to you when you start working with
+Terraform. Using this variable,
+you can name your resources so that they can easily be identified by the
+workspace name, and additionally, using logic within your code,
+you can even instruct Terraform to take a unique action depending on what
+workspace you're currently in.
+Let's look at a quick example of how you would use workspaces. So,
+you have your Terraform controller node on which you are running your Terraform
+commands, and you choose to create a workspace.
+Now you give the workspace the name developer,
+and when you switch to the developer workspace using the workspace command that
+we just showed you,
+the terraform dot workspace variable is going to be populated by the name of the
+workspace that you're in.
+And using this variable and some clever logic within Terraform,
+you can instruct it to deploy it to that developer account,
+so that the production or default workspace is not affected or a state file is
+not affected. So,
+Terraform will go out and create independent new shared files for the developer
+workspace,
+and you can modify it to your heart's liking without impacting the state files
+for the production account or the default account. And,
+once you're happy testing the infrastructure using the developer workspace,
+you can switch to the default workspace and deploy to it using the normal
+Terraform apply workflow. Now,
+let's look at a couple of examples where the terraform dot workspace variable is
+being used. The first example is an AWS underscore instance resource,
+which spins up an EC2 virtual machine in the AWS cloud.
+And we've done all the other details of the resource for brevity.
+In this resource,
+we're basically using the terraform dot workspace variable and using logic
+within Terraform to determine the number of instances which are going to be spun
+up. So,
+if the terraform dot workspace variable has the value default when the Terraform
+apply is executed, it's going to spin up five instances. And,
+if the workspace is not default, then only one instance will be spun up,
+as evident to this logic. Now,
+the second example spins up an AWS S3 bucket,
+and it appends to the bucket name whatever workspace you're in. So,
+if your workspace is named default,
+the name of the bucket we just created would be my XYZ bucket dash default.
+And these are a couple of use cases of terraform dot workspace variable. So,
+let's head towards the demonstration and see Terraform workspaces in action.
+I'm logging into my center virtual machine,
+where I've already downloaded and installed Terraform,
+and I've copied over some test code that I'll be showing during the
+demonstration. Before we play around with any code or deploying infrastructure,
+let's first go ahead and see the default workspace that we talked about.
+Now remember, I've not done anything.
+I've only installed Terraform on the system.
+And once I do a Terraform workspace list command,
+it shows us that the only workspace that exists and that cannot be deleted is
+the default one and that we're using it evident from the asterisk right next to
+it. Let's go ahead and get a new workspace.
+The command for that would be terraform workspace new.
+And then we give it a name that we like. We'll give our workspace the name test.
+And it tells us that we have created and switched to the new workspace.
+Let's run the Terraform workspace list command and confirm that we are indeed
+using the test workspace.
+And we can tell that by looking at the asterisk right next to the name of the
+workspace. Now let's clear the screen and take a quick look at the code.
+Let's open up the network dot tf file first. And in this file,
+I'm creating a virtual private cloud, which will house subnets.
+I'm also creating a subnet,
+and notice how I've embedded the terraform dot workspace variable inside
+the name of the resources, so that whenever these resources are spun up,
+I can easily tell which workspace these resources were spun up against.
+And similarly,
+you'll see me use the terraform dot workspace variable and set the name of the
+security group and other resources.
+Now let's hop on to the main dot tf file
+and I'm using some logic along with the terraform dot workspace variable here.
+I'm letting the provider know to deploy in the region,
+depending on the terraform dot workspace variable's value. So,
+if the value of the variable is default,
+which means that we are in the default workspace,
+I want the infrastructure to be deployed in us-east-2 region.
+Otherwise I want it to be deployed in us-west-1. Again,
+I'm using terraform dot workspace variable to tag our EC2 instance,
+which is the virtual machine being spun up with the name of the workspace dash
+EC2. So,
+let's quit out of this and quickly initialize and deploy the infrastructure.
+And remember that we are inside the test workspace,
+so when we deploy this,
+we ideally would like to see the infrastructure deployed in us-west-1,
+because we are not in the default workspace right now.
+And all of our resources will be appended with the name of the workspace,
+which is for right now test. So the VM's name should be test dash EC2,
+which we'll also verify by logging into the AWS console. So.
+Let's clear the screen, issue a terraform init,
+and then issue a terraform apply.
+And I'll add the auto-approved flag so that I'm not prompted to enter yes.
+So, through the magic of video editing,
+I'll pause this and come back when everything has been deployed.
+And here we are. Our resources have been deployed,
+and they should have been deployed in us-west-1.
+So let's head to the AWS console and,,
+from the region dropdown select us-west-1. We've
+got an EC2 virtual machine here,
+and you'll notice that it's name is test dash EC2.
+And the fact that it is deployed in North California or us-west-1 means that our
+logic and Terraform workspace variable worked and helped us deploy this
+infrastructure in a completely different region,
+depending on the value of data from that workspace variable. So,
+let's go back now and change the workspace that we're in and deploy into a
+different workspace. So,
+let's clear the screen and we'll issue the command terraform workspace select,
+and we want to move to the default workspace now.
+We have changed to the default workspace now,
+and let's take a look at the main dot tf file again.
+Remember that if the value of the Terraform workspace is default,
+we should be deploying in the us-east-2 region,
+and all the names of the resources should be presented with the name of the
+workspace, which should be default. So,
+the name of the EC2 incidents should be default dash EC2. So,
+let's clear the screen. And since we have already initialized the directory,
+we'll just issue a terraform apply and we'll again add the auto-approved flags
+so we're not prompted to enter yes.
+So again,
+I'll pause the video and come back when everything has been deployed for this.
+And we are back. The resources have been deployed,
+and let's head over to the AWS console and verify this.
+So we're in the North California or us-west-1 region,
+and we don't expect to see any additional deployment here because the new
+workspace should have made our Terraform code deploy into the us-east-2 region.
+So let's head over to the us-east-2 region, which is Ohio.
+Notice that we do have an EC2 instance, which is default test EC2.
+The fact that it has the word default at the start of the name and that it is
+one up in us-east-2 or Ohio means that our Terraform workspace variable and the
+logic worked. So,
+this goes to show you the flexibility that Terraform offers to you through the
+workspaces,
+where you can deploy a different infrastructure against the same code without
+having to mess with the state file of the default workspace or whatever
+workspace is your production workspace.
+I do want to show you a quick little thing, though,
+that the state felt that workspaces create are stored in the directory called
+terraform dot tfstate dot d.
+Although you don't have to worry about how Terraform manages these things,
+but just to throw it out there that the terraform dot tfstate file is the
+default state file maintained by the default workspace.
+Any of the workspace state files are stored inside Terraform dot tfstate dot d.
+So this was a quick little demo of how to use workspaces and manipulate logic
+within your Terraform deployments to deploy to different environments using the
+same Terraform code. Thank you for going through this lesson.
