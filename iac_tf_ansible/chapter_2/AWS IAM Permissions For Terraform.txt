@@ -1,0 +1,120 @@
+Good morning, good evening, and good night
+to all the Cloud Gurus,
+wherever you may be watching this from.
+In this lesson, we're going to go to the AWS IAM permissions
+for going through this Terraform course.
+Now, as we build resources using Terraform,
+of course, Terraform will need permissions to create,
+update, and delete various AWS resources.
+For example, EC2 instances, S3 buckets,
+load balancers, among many of the resources.
+There's a couple of ways we can go about providing
+those permissions to our Terraform node
+or the controller node
+on which we'll be running the Terraform binary from.
+The very first thing is to create a separate IAM user
+within your AWS account with the required permissions
+and then using the access key
+and the secret access key of that IAM user
+with the AWS CLI to provide Terraform binary,
+the permissions to go about and deploy those resources.
+The other method is to create an EC2 IAM role,
+which of course attaches to your EC2 instance
+and provide it with the permissions to go about
+and deploy the resources that Terraform needs.
+So let's go ahead and take a look at the actual permissions
+because regardless of what we do
+with either taking the number one path
+of creating an IAM user or creating an IAM role,
+we'll still need to attach the same amount of permissions
+to either of these 2 entities.
+So let's go ahead and take a look at those permissions.
+The link to this permissions will be available
+in the resources section of this video.
+So the first permission set that I'm going to show you
+is a bit more granular than you would expect.
+So this gives just about enough formations for Terraform
+to be able to deploy the resources,
+to get this project up and running.
+However, if you don't feel like going
+through all this permissions
+and just want to get up and running,
+there's another set of permissions,
+which basically is a bit more relaxed.
+However, I would not recommend using these permissions.
+So let's have back to the granular permissions.
+You will notice permission such as EC2 get actions,
+creating route tables, deleting route tables,
+and basically any resource that we create,
+we need to make sure that the resource
+has a delete permission for that action.
+So for example, if you're creating a resource,
+there's definitely going to be a permission down there,
+which is going to be deleting the route
+because Terraform destroy
+or when we want to bring down our project using Terraform,
+Terraform still needs to have the write permissions
+to be able to destroy or delete those resources.
+So I'll copy over the granular permissions,
+head over to an AWS management console
+that I'm already logged into
+and head over to the IAM console.
+So we'll go with the first method,
+creating an IAM user and attaching the permissions to it.
+But before we do that,
+we're going to go through a common step,
+which is creating the policy in question.
+So I'll go into Policies, click on Create Policy
+and because we have the JSON already on us,
+we'll just go into the JSON tab
+and copy over the JSON policy.
+We'll review it, name it,
+and we'll put this in the description as well.
+And you'll see that this has quantified
+for us in the summary.
+So there's a bunch of actions happening here
+and then click on Create Policy.
+Now this was the common step.
+You can go ahead and attach this policy to an EC2 role
+or an IAM user.
+So we'll go down to Users first, click on Add User
+and create a user for our Terraform deployment.
+Because this user doesn't need management console access,
+we'll only allow it programmatic access.
+Click on Next Permissions.
+And we'll click on Attach Existing Policies Directly
+because we already had the policy created
+and we named it Terraform user policy.
+So select that and always a good practice
+to tag your resources.
+You'll click on Review and go ahead and create the user.
+Now you need to save these credentials to a secure file,
+but because I'm only demonstrating the concept,
+I won't be saving the credentials for my case.
+However, if you are following along in the course,
+be sure to download and save this credential some where safe
+so that you can use it later on
+when you're setting up your Terraform templates.
+The second method was to create a role
+and attach it to an EC2 instance.
+So I'll go down to roles now, click on Create Role,
+and from the AWS services, we'll select EC2,
+then click on Next for permissions.
+We'll search for the same permission
+that we attached to the IAM user,
+which was Terraform user policy, select it.
+And again, we're going to tag our role
+and we're going to tag our role as it's a good practice
+and click on Review.
+We'll give our role a name and create role.
+Now they can go ahead and attach this role
+to any running EC2 instance
+or any instance that we intend to boot up
+and use as our Terraform controller.
+So in a nutshell,
+these are the 2 methods that you will be using
+to give your Terraform deployment the permissions it needs
+to go ahead and deploy the resources.
+Thank you for going to this lesson.
+If you have any questions or concerns,
+feel free to reach out.

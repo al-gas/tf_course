@@ -1,0 +1,109 @@
+Well, hello there, Cloud Gurus,
+and welcome to this lesson
+on setting up AWS CLI and Ansible
+so that you can follow along in this course.
+So, let's dive right in.
+We'll first need to download
+and install Python's package manager called PIP.
+This can be done a number of ways.
+However, in my case, I'll be using the yum utility
+to install it on CentOS 7.
+Although I'd recommend using CentOS 7 for following along,
+but you can still download the security
+using whatever method is available for your OS.
+We'll then go ahead and install AWS CLI
+and Ansible using PIP,
+and also download a preconfigured
+Ansible.cfg configuration file,
+which basically configures the Ansible commands behavior.
+This file has minor tweaks
+to ease Ansible's SSH access to systems
+and verbosity of warning info.
+Finally, we'll configure our AWS CLI
+with our AWS account credentials
+and verify that both Ansible and AWS CLI
+have been installed properly.
+So, let's head into the system
+on which we'll be configuring this all.
+I'm already logged into a system
+which I had previously installed Terraform on.
+And now, I'll configure this with Ansible and AWS CLI.
+We'll use the yum command
+to install Python's PIP package manager.
+So, sudo yum -y install python3-pip.
+Now that the utility is installed,
+let's clear the screen and install AWS CLI,
+the command for which would be
+pip3 install awscli
+and then we'll pass in the flag --user.
+In my case, some of the requirements were already installed,
+so they were not redownloaded.
+However, in your case, you might see a different output
+as packages are downloaded along the way.
+We'll clear the screen again and install Ansible.
+The command for this is pip3 install ansible
+and again we'll pass the flag --user.
+You'll again notice that some of the requirements
+for downloading and installing Ansible
+were already met on my system.
+Therefore, you didn't see anything get downloaded.
+However, in your system, you might see a different output
+as packages are downloaded
+and installed by the PIP package manager.
+So, let's clear the screen
+and now to house all our Terraform
+and Ansible templates in one folder,
+let's create a separate directory.
+We'll name it deploy_iac_tf_ansible
+You can name it whatever you like.
+So we'll cd into the folder that we just created.
+We'll clear the screen
+and download the Ansible.cfg file that we mentioned.
+The command for that would be wget
+and then we'll paste in the URL, which should be available
+in the resources section of this lesson.
+The file has been downloaded.
+Let's clear the screen.
+And now, verify that AWS CLI and Ansible
+are both installed and working properly.
+For AWS CLI, I'll execute the command
+aws --version.
+And if this command executes successfully,
+you'll see the version of the AWS CLI installed.
+Now, let's go ahead and do the same thing for Ansible.
+And the output basically tells us
+that Ansible is successfully installed
+and it is picking up the configuration file
+that we have just placed in the folder.
+By default, Ansible will pick up any files
+which are in the same folder
+as where the command is ran, which it has done here.
+Finally, let's create the screen
+and integrate our AWS CLI
+with the credentials of our AWS account.
+I've already got my AWS secret access key
+and access key ID available,
+so I'll use them to integrate my AWS CLI.
+The command for that would be aws configure
+I'll hit Enter and then I'll be prompted
+for all the credentials.
+So I'll paste in my access key ID first
+and then I'll copy over my secret access key ID.
+We'll provide the default region as us-east-1
+and the output format to be in JSON.
+Now, our AWS CLI is configured.
+To quickly test it out,
+let's clear the screen and issue a basic AWS CLI command.
+aws ec2 describe-instances.
+Although we don't have any instances
+running in our AWS account as of right now,
+however, the output confirms that we were able
+to authenticate against our AWS account
+and issue the API call successfully,
+which now Terraform will also be able to use.
+So wrapping up, in this lesson we learned
+how to install Python's PIP package manager
+and use that to install both AWS CLI and Ansible
+and also preconfigured Ansible with an Ansible.cfg file
+that is provided to you.
+Thank you for going through this lesson.
